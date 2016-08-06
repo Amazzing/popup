@@ -1,0 +1,40 @@
+.dynamic-popup {
+    position: absolute;
+    top: 0;
+    z-index: 9999999;
+}
+.dynamic-popup-overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 9999998;
+}
+.popup-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: #FFF;
+    padding: 5px;
+    font-size: 2em;
+}
+.popup-title {
+    background: #FFF;
+    margin: 10px 0;
+    padding: 10px;
+    text-align: center;
+}
+.popup-nav {
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    width: 100%;
+}
+.popup-nav .nav-next {
+    float: right;
+}
+.hide-ooc, .hide-occ {
+    cursor: pointer;
+}
