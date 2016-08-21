@@ -25,7 +25,7 @@ if (typeof isMobile == 'undefined') {
                     var currentIndex = $itemsInGroup.index($(this)),
                         nextIndex = $itemsInGroup.eq(currentIndex + 1).length ? currentIndex + 1 : 0,
                         prevIndex = currentIndex ? currentIndex - 1 : $itemsInGroup.length - 1;
-                    $('.dynamic-popup').append('<div class="popup-nav"><a href="#" class="nav-prev">&lt;</a><a href="#" class="nav-next">&gt;</a></div>');
+                    $('.popup-wrapper').append('<div class="popup-nav"><a href="#" class="nav-prev">&lt;</a><a href="#" class="nav-next">&gt;</a></div>');
                     $('.nav-next, .nav-prev').on('click', function(){
                         currentIndex = $(this).hasClass('nav-next') ? nextIndex : prevIndex;
                         nextIndex = $itemsInGroup.eq(currentIndex + 1).length ? currentIndex + 1 : 0;
@@ -40,21 +40,20 @@ if (typeof isMobile == 'undefined') {
 
     $.popup = function(href, settings) {
         var settings = $.extend({}, initialPopupSettings, settings),
-            popupHTML = '<div class="dynamic-popup"><a href="#" class="popup-close">x</a><div class="popup-content"></div></div>',
-            $popupContent = getPopupContent(href, settings.iframe),
-            popupOverlayHTML = '<div class="dynamic-popup-overlay"></div>';
-        $('.dynamic-popup-overlay, .dynamic-popup').remove();
-        $('body').append(popupOverlayHTML+popupHTML);
+            popupHTML = '<div class="dynamic-popup-wrapper"><div class="dynamic-popup-overlay"></div><div class="dynamic-popup"><a href="#" class="popup-close">x</a><div class="popup-content"></div></div></div>',
+            $popupContent = getPopupContent(href, settings.iframe);
+        $.popup.close();
+        $('body').append(popupHTML);
         $('.popup-content').html('').append($popupContent);
         $('.popup-close').on('click', function(e) {
             e.preventDefault();
             $.popup.close();
         });
         if (settings.title && $.type(settings.title) === 'string') {
-            $('.dynamic-popup').append('<div class="popup-title">'+settings.title+'</div>')
+            $('.popup-wrapper').append('<div class="popup-title">'+settings.title+'</div>')
         }
         if (settings.customClass) {
-            $('.dynamic-popup-overlay').addClass(settings.customClass);
+            $('.dynamic-popup-wrapper').addClass(settings.customClass);
         }
         if (settings.hideOnOverlayClick) {
             $('.dynamic-popup-overlay').addClass('hide-ooc').on('click', function() {
@@ -73,7 +72,7 @@ if (typeof isMobile == 'undefined') {
             $('.tmp-popup-placeholder').after($movedElement);
             $movedElement = null;
         }
-        $('.dynamic-popup, .dynamic-popup-overlay, .tmp-popup-placeholder').remove();
+        $('.dynamic-popup-wrapper, .tmp-popup-placeholder').remove();
     }
 
     function getPopupContent(href, iframe){
